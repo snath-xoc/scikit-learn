@@ -2651,114 +2651,120 @@ def add_dummy_feature(X, value=1.0):
 class QuantileTransformer(OneToOneFeatureMixin, TransformerMixin, BaseEstimator):
     """Transform features using quantiles information.
 
-    This method transforms the features to follow a uniform or a normal
-    distribution. Therefore, for a given feature, this transformation tends
-    to spread out the most frequent values. It also reduces the impact of
-    (marginal) outliers: this is therefore a robust preprocessing scheme.
+        This method transforms the features to follow a uniform or a normal
+        distribution. Therefore, for a given feature, this transformation tends to
+        spread out the most frequent values. It also reduces the impact of
+        (marginal) outliers: this is therefore a robust preprocessing scheme.
 
-    The transformation is applied on each feature independently. First an
-    estimate of the cumulative distribution function of a feature is
-    used to map the original values to a uniform distribution. The obtained
-    values are then mapped to the desired output distribution using the
-    associated quantile function. Features values of new/unseen data that fall
-    below or above the fitted range will be mapped to the bounds of the output
-    distribution. Note that this transform is non-linear. It may distort linear
-    correlations between variables measured at the same scale but renders
-    variables measured at different scales more directly comparable.
+        The transformation is applied on each feature independently. First an
+        estimate of the cumulative distribution function of a feature is used to map
+        the original values to a uniform distribution. The obtained values are then
+        mapped to the desired output distribution using the associated quantile
+        function. Features values of new/unseen data that fall below or above the
+        fitted range will be mapped to the bounds of the output distribution. Note
+        that this transform is non-linear. It may distort linear correlations
+        between variables measured at the same scale but renders variables measured
+        at different scales more directly comparable.
 
-    For example visualizations, refer to :ref:`Compare QuantileTransformer with
-    other scalers <plot_all_scaling_quantile_transformer_section>`.
+        For example visualizations, refer to :ref:`Compare QuantileTransformer with
+        other scalers <plot_all_scaling_quantile_transformer_section>`.
 
-    Read more in the :ref:`User Guide <preprocessing_transformer>`.
+        Read more in the :ref:`User Guide <preprocessing_transformer>`.
 
-    .. versionadded:: 0.19
+        .. versionadded:: 0.19
 
-    Parameters
-    ----------
-    n_quantiles : int, default=1000 or n_samples
-        Number of quantiles to be computed. It corresponds to the number
-        of landmarks used to discretize the cumulative distribution function.
-        If n_quantiles is larger than the number of samples, n_quantiles is set
-        to the number of samples as a larger number of quantiles does not give
-        a better approximation of the cumulative distribution function
-        estimator.
+    å    Parameters
+        ----------
+        n_quantiles : int, default=1000 or n_samples
+            Number of quantiles to be computed. It corresponds to the number of
+            landmarks used to discretize the cumulative distribution function. If
+            n_quantiles is larger than the effective sample size (sum of sample
+            weights if provided, total number of samples otherwise), n_quantiles is
+            set to the effective sample size as a larger number of quantiles does
+            not give a better approximation of the cumulative distribution function
+            estimator.
 
-    output_distribution : {'uniform', 'normal'}, default='uniform'
-        Marginal distribution for the transformed data. The choices are
-        'uniform' (default) or 'normal'.
+        output_distribution : {'uniform', 'normal'}, default='uniform'
+            Marginal distribution for the transformed data. The choices are
+            'uniform' (default) or 'normal'.
 
-    ignore_implicit_zeros : bool, default=False
-        Only applies to sparse matrices. If True, the sparse entries of the
-        matrix are discarded to compute the quantile statistics. If False,
-        these entries are treated as zeros.
+        ignore_implicit_zeros : bool, default=False
+            Only applies to sparse matrices. If True, the sparse entries of the
+            matrix are discarded to compute the quantile statistics. If False, these
+            entries are treated as zeros.
 
-    subsample : int or None, default=10_000
-        Maximum number of samples used to estimate the quantiles for
-        computational efficiency. Note that the subsampling procedure may
-        differ for value-identical sparse and dense matrices.
-        Disable subsampling by setting `subsample=None`.
+        subsample : int or None, default=10_000
+            Maximum number of samples used to estimate the quantiles for
+            computational efficiency. Note that the subsampling procedure may differ
+            for value-identical sparse and dense matrices. Disable subsampling by
+            setting `subsample=None`.
 
-        .. versionadded:: 1.5
-           The option `None` to disable subsampling was added.
+            .. versionadded:: 1.5
+               The option `None` to disable subsampling was added.
 
-    random_state : int, RandomState instance or None, default=None
-        Determines random number generation for subsampling and smoothing
-        noise.
-        Please see ``subsample`` for more details.
-        Pass an int for reproducible results across multiple function calls.
-        See :term:`Glossary <random_state>`.
+        random_state : int, RandomState instance or None, default=None
+            Determines random number generation for subsampling and smoothing noise.
+            Please see ``subsample`` for more details. Pass an int for reproducible
+            results across multiple function calls. See :term:`Glossary
+            <random_state>`.
 
-    copy : bool, default=True
-        Set to False to perform inplace transformation and avoid a copy (if the
-        input is already a numpy array).
+        copy : bool, default=True
+            Set to False to perform inplace transformation and avoid a copy (if the
+            input is already a numpy array).
 
-    Attributes
-    ----------
-    n_quantiles_ : int
-        The actual number of quantiles used to discretize the cumulative
-        distribution function.
+        Attributes
+        ----------
+        n_quantiles_ : int
+            The actual number of quantiles used to discretize the cumulative
+            distribution function. If n_quantiles is larger than the effective
+            sample size (sum of sample weights if provided, total number of samples
+            otherwise), n_quantiles is set to the effective sample size as a larger
+            number of quantiles does not give a better approximation of the
+            cumulative distribution function estimator.
 
-    quantiles_ : ndarray of shape (n_quantiles, n_features)
-        The values corresponding the quantiles of reference.
 
-    references_ : ndarray of shape (n_quantiles, )
-        Quantiles of references.
 
-    n_features_in_ : int
-        Number of features seen during :term:`fit`.
+        quantiles_ : ndarray of shape (n_quantiles, n_features)
+            The values corresponding the quantiles of reference.
 
-        .. versionadded:: 0.24
+        references_ : ndarray of shape (n_quantiles, )
+            Quantiles of references.
 
-    feature_names_in_ : ndarray of shape (`n_features_in_`,)
-        Names of features seen during :term:`fit`. Defined only when `X`
-        has feature names that are all strings.
+        n_features_in_ : int
+            Number of features seen during :term:`fit`.
 
-        .. versionadded:: 1.0
+            .. versionadded:: 0.24
 
-    See Also
-    --------
-    quantile_transform : Equivalent function without the estimator API.
-    PowerTransformer : Perform mapping to a normal distribution using a power
+        feature_names_in_ : ndarray of shape (`n_features_in_`,)
+            Names of features seen during :term:`fit`. Defined only when `X` has
+            feature names that are all strings.
+
+            .. versionadded:: 1.0
+
+        See Also
+        --------
+        quantile_transform : Equivalent function without the estimator API.
+        PowerTransformer : Perform mapping to a normal distribution using a power
+            transform.
+        StandardScaler : Perform standardization that is faster, but less robust
+            to outliers.
+        RobustScaler : Perform robust standardization that removes the influence
+            of outliers but does not put outliers and inliers on the same scale.
+
+        Notes
+        -----
+        NaNs are treated as missing values: disregarded in fit, and maintained in
         transform.
-    StandardScaler : Perform standardization that is faster, but less robust
-        to outliers.
-    RobustScaler : Perform robust standardization that removes the influence
-        of outliers but does not put outliers and inliers on the same scale.
 
-    Notes
-    -----
-    NaNs are treated as missing values: disregarded in fit, and maintained in
-    transform.
-
-    Examples
-    --------
-    >>> import numpy as np
-    >>> from sklearn.preprocessing import QuantileTransformer
-    >>> rng = np.random.RandomState(0)
-    >>> X = np.sort(rng.normal(loc=0.5, scale=0.25, size=(25, 1)), axis=0)
-    >>> qt = QuantileTransformer(n_quantiles=10, random_state=0)
-    >>> qt.fit_transform(X)
-    array([...])
+        Examples
+        --------
+        >>> import numpy as np
+        >>> from sklearn.preprocessing import QuantileTransformer
+        >>> rng = np.random.RandomState(0)
+        >>> X = np.sort(rng.normal(loc=0.5, scale=0.25, size=(25, 1)), axis=0)
+        >>> qt = QuantileTransformer(n_quantiles=10, random_state=0)
+        >>> qt.fit_transform(X)
+        array([...])
     """
 
     _parameter_constraints: dict = {
