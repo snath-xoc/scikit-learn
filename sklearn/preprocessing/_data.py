@@ -2716,13 +2716,7 @@ class QuantileTransformer(OneToOneFeatureMixin, TransformerMixin, BaseEstimator)
         ----------
         n_quantiles_ : int
             The actual number of quantiles used to discretize the cumulative
-            distribution function. If n_quantiles is larger than the effective
-            sample size (sum of sample weights if provided, total number of samples
-            otherwise), n_quantiles is set to the effective sample size as a larger
-            number of quantiles does not give a better approximation of the
-            cumulative distribution function estimator.
-
-
+            distribution function.
 
         quantiles_ : ndarray of shape (n_quantiles, n_features)
             The values corresponding the quantiles of reference.
