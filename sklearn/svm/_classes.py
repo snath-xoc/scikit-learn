@@ -816,7 +816,7 @@ class SVC(BaseSVC):
         If `probability=False`, it's an empty array. Platt scaling uses the
         logistic function
 
-        .. deprecated:: 1.11
+        .. deprecated:: 1.9
 
     probB_ : ndarray of shape (n_classes * (n_classes - 1) / 2)
         If `probability=True`, it corresponds to the parameters learned in
