@@ -1105,6 +1105,10 @@ class NuSVC(BaseSVC):
         more information on the multiclass case and training procedure see
         section 8 of [1]_.
 
+        .. deprecated:: 1.9
+            The attributes `probA_` is deprecated in version 1.9
+            and will be removed in 1.11.
+
     shape_fit_ : tuple of int of shape (n_dimensions_of_X,)
         Array dimensions of training vector ``X``.
 
