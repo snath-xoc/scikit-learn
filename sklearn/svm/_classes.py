@@ -1092,8 +1092,6 @@ class NuSVC(BaseSVC):
         If `probability=True`, parameters learned in Platt scaling.
 
         .. deprecated:: 1.9
-            The attributes `probA_` and `probB_` were deprecated in version 1.9
-            and will be removed in 1.11.
 
     probB_ : ndarray of shape (n_classes * (n_classes - 1) / 2,)
         If `probability=True`, it corresponds to the parameters learned in
@@ -1106,8 +1104,9 @@ class NuSVC(BaseSVC):
         section 8 of [1]_.
 
         .. deprecated:: 1.9
-            The attributes `probA_` is deprecated in version 1.9
-            and will be removed in 1.11.
+            The attributes `probA_` and `probB_` is deprecated in version 1.9
+            and will be removed in 1.11. This is as the
+            `probability=True` parameter is deprecated and will be removed in 1.11.
 
     shape_fit_ : tuple of int of shape (n_dimensions_of_X,)
         Array dimensions of training vector ``X``.
