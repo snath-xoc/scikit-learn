@@ -1091,10 +1091,9 @@ class NuSVC(BaseSVC):
     probA_ : ndarray of shape (n_classes * (n_classes - 1) / 2,)
         If `probability=True`, parameters learned in Platt scaling.
 
-        .. deprecated:: 1.10
-            The attributes `probA_` and `probB_` were deprecated in version 1.10
-            and will be removed in 1.12. They are internal Platt scaling
-            parameters not intended for public use.
+        .. deprecated:: 1.9
+            The attributes `probA_` and `probB_` were deprecated in version 1.9
+            and will be removed in 1.11.
 
     probB_ : ndarray of shape (n_classes * (n_classes - 1) / 2,)
         If `probability=True`, it corresponds to the parameters learned in
