@@ -1013,7 +1013,7 @@ class BaseSVC(ClassifierMixin, BaseLibSVM, metaclass=ABCMeta):
         return coef
 
     @deprecated(
-        "Attribute `probA_` was deprecated in version 1.10 and will be removed in "
+        "Attribute `probA_` was deprecated in version 1.9 and will be removed in "
         "1.11 as the `probability=True` option for SVC and NuSVC was deprecated "
         "and will be removed in 1.11."
     )
