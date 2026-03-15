@@ -2654,8 +2654,8 @@ class QuantileTransformer(OneToOneFeatureMixin, TransformerMixin, BaseEstimator)
     """Transform features using quantiles information.
 
     This method transforms the features to follow a uniform or a normal
-    distribution. Therefore, for a given feature, this transformation tends to
-    spread out the most frequent values. It also reduces the impact of
+    distribution. Therefore, for a given feature, this transformation tends
+    to spread out the most frequent values. It also reduces the impact of
     (marginal) outliers: this is therefore a robust preprocessing scheme.
 
     The transformation is applied on each feature independently. First an
