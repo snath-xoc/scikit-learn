@@ -2659,14 +2659,14 @@ class QuantileTransformer(OneToOneFeatureMixin, TransformerMixin, BaseEstimator)
     (marginal) outliers: this is therefore a robust preprocessing scheme.
 
     The transformation is applied on each feature independently. First an
-    estimate of the cumulative distribution function of a feature is used to map
-    the original values to a uniform distribution. The obtained values are then
-    mapped to the desired output distribution using the associated quantile
-    function. Features values of new/unseen data that fall below or above the
-    fitted range will be mapped to the bounds of the output distribution. Note
-    that this transform is non-linear. It may distort linear correlations
-    between variables measured at the same scale but renders variables measured
-    at different scales more directly comparable.
+    estimate of the cumulative distribution function of a feature is
+    used to map the original values to a uniform distribution. The obtained
+    values are then mapped to the desired output distribution using the
+    associated quantile function. Features values of new/unseen data that fall
+    below or above the fitted range will be mapped to the bounds of the output
+    distribution. Note that this transform is non-linear. It may distort linear
+    correlations between variables measured at the same scale but renders
+    variables measured at different scales more directly comparable.
 
     For example visualizations, refer to :ref:`Compare QuantileTransformer with
     other scalers <plot_all_scaling_quantile_transformer_section>`.
@@ -2692,23 +2692,24 @@ class QuantileTransformer(OneToOneFeatureMixin, TransformerMixin, BaseEstimator)
 
     ignore_implicit_zeros : bool, default=False
         Only applies to sparse matrices. If True, the sparse entries of the
-        matrix are discarded to compute the quantile statistics. If False, these
-        entries are treated as zeros.
+        matrix are discarded to compute the quantile statistics. If False,
+        these entries are treated as zeros.
 
     subsample : int or None, default=10_000
         Maximum number of samples used to estimate the quantiles for
-        computational efficiency. Note that the subsampling procedure may differ
-        for value-identical sparse and dense matrices. Disable subsampling by
-        setting `subsample=None`.
+        computational efficiency. Note that the subsampling procedure may
+        differ for value-identical sparse and dense matrices.
+        Disable subsampling by setting `subsample=None`.
 
         .. versionadded:: 1.5
            The option `None` to disable subsampling was added.
 
     random_state : int, RandomState instance or None, default=None
-        Determines random number generation for subsampling and smoothing noise.
-        Please see ``subsample`` for more details. Pass an int for reproducible
-        results across multiple function calls. See :term:`Glossary
-        <random_state>`.
+        Determines random number generation for subsampling and smoothing
+        noise.
+        Please see ``subsample`` for more details.
+        Pass an int for reproducible results across multiple function calls.
+        See :term:`Glossary <random_state>`.
 
     copy : bool, default=True
         Set to False to perform inplace transformation and avoid a copy (if the
@@ -2732,8 +2733,8 @@ class QuantileTransformer(OneToOneFeatureMixin, TransformerMixin, BaseEstimator)
         .. versionadded:: 0.24
 
     feature_names_in_ : ndarray of shape (`n_features_in_`,)
-        Names of features seen during :term:`fit`. Defined only when `X` has
-        feature names that are all strings.
+        Names of features seen during :term:`fit`. Defined only when `X`
+        has feature names that are all strings.
 
         .. versionadded:: 1.0
 
@@ -2926,10 +2927,10 @@ class QuantileTransformer(OneToOneFeatureMixin, TransformerMixin, BaseEstimator)
 
         if self.n_quantiles > effective_sample_size:
             warnings.warn(
-                "n_quantiles (%s) is greater than the total number "
-                "of samples (%s). n_quantiles is set to "
+                "n_quantiles (%s) is greater than the effective "
+                "sample size (%s). n_quantiles is set to "
                 "effective_sample_size (%s)."
-                % (self.n_quantiles, n_samples, effective_sample_size)
+                % (self.n_quantiles, effective_sample_size, effective_sample_size)
             )
         self.n_quantiles_ = int(max(1, min(self.n_quantiles, effective_sample_size)))
 
